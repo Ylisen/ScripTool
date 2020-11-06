@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# @Time : 2020-9-28 12:06
+# @Author : admin
+# @File : MysqlDB
+# @Software: PyCharm
+# @Contact : xxx.com
+# @Desc :
+
+
+import pymysql
+
+class MysqlDb(object):
+    def __init__(self, host_port, username, password):
+        host, port = host_port.split(':')
+        self.conn = pymysql.connect(host, username, password, port=int(port))
+
+    def close(self):
+        self.conn.close()
+
+    def execute_sql(self, sql):
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        return cur
+
+    def get_all_database(self):
+        sql = 'show databases;'
+        cur = self.execute_sql(sql)
+        return [dbname[0] for dbname in cur.fetchall()]
+
+    def is_empty_table(self, db_name, table_name):
+        sql = "select 1 from `%s`.`%s` limit 1;" % (db_name, table_name)
+        return not self.execute_sql(sql).fetchone()
+
+
+if __name__ == '__main__':
+    dbobj = MysqlDb('master:3306', 'root', '123456')
