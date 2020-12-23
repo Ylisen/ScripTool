@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time : 2020-11-5 17:45
 # @Author : lisen
-# @File : ImpalaDb
+# @File : ImpalaDb、HiveDb
 # @Software: PyCharm
 # @Contact : xxx.com
 # @Desc :
@@ -58,7 +58,7 @@ class ImpalaDb(object):
 
 
 if __name__ == '__main__':
-    impala_obj = ImpalaDb('master:21050')
+    impala_obj = ImpalaDb('master:21050')  # hive，将 port 改为 10000
     for tb in impala_obj.get_all_table('test'):
         print(tb)
         
